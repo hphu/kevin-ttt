@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="TTT.css">
+<head>
+<script language="JavaScript" type="text/javascript">
+function restart(){
+
+}
+function mainMenu(){
+  window.location.href='mainmenu.html';
+}
+</script>
+</head>
+<body>
+
+<h1>Computer Match</h1>
+
+<p id="versus"><img src="x.jpg" height="30" width="30">  Player 1 vs. Player 2  <img src="o.jpg" height="30" width="30"></p>
+
+<canvas id="gameboard" width="305" height="305" onclick="makeMove(event)"></canvas>
+<br>
+
+
+<p id="demo"></p>
+<p>Should be similar to gameboard.html but doesn't take a second player input.</p>
+<p>Shouldn't go to results screen because no point in asking a computer for a rematch.</p>
+
+<button type="button" onclick="restart()">Restart Test</button>
+<button type="button" onclick="mainMenu()">Return To Menu</button>
+<script type="text/javascript" src="boardDraw.js"></script>
+</body>
+</html>
