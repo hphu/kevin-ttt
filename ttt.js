@@ -46,7 +46,7 @@ function getsessionid(){ //get my player id
     $.ajax({
 	    type: 'POST',
 	    url: 'session.php',
-      async:false,
+      async: false,
 	    success: function(data) {
 	    	playerid=data;
 
@@ -135,7 +135,9 @@ function mouseclick(e){
    y = e.clientY;
    c = document.getElementById('board');
    canvasx = x-c.offsetLeft;
-   canvasy = y-c.offsetTop;
+   canvasy = y - c.offsetTop;
+   console.log(canvasy);
+   console.log(2*gameboard.height/3)
    if (gamebegun && !gameover){
      if (justwent == mystateid){
       alert("Not your turn");
@@ -238,14 +240,12 @@ function update(){
       } else {
         document.getElementById("playerturn").innerHTML = myname + "'s turn";
       }
-    } else if (gameover){
-
-    }
+    
     $.ajax({
       type: 'POST',
       url: 'gamestate.php',
       data: {"gameid": gameid},
-      async:false,
+      async: false,
       success: function(data) {
         for (var i=0; i<9;i++){
           gamestate[i] = data.charAt(i);
@@ -255,28 +255,42 @@ function update(){
         if (data.charAt(10)  == 'w'){
           gameover = true;
           if (parseInt(data.charAt(16)) == mystateid){
-            console.log(mystateid);
             document.getElementById("playerturn").innerHTML = myname + " has won!";
+            gameend(myname, opponentname, false);
           } else {
             document.getElementById("playerturn").innerHTML = opponentname + " has won!";
+            gameend(opponentname, myname, false);
           }
         } else if (data.indexOf('0')  === -1){
             gameover = true; 
             document.getElementById("playerturn").innerHTML = "Tie";
+            gameend(opponentname, myname, true);
+          }
         }
-      }
-  });
-  for (var i=0;i<9;i++){
-    if (drawngamestate[i]== false){
-      if(parseInt(gamestate[i]) === 2){ //game creator is always X
-          drawx((i%3)*(gameboard.width/3) +gameboard.width/6, (Math.floor(i/3))*(gameboard.height/3) + gameboard.width/6);
-          drawngamestate[i]=true;
-        } else if (gamestate[i] != 0) {
-          drawo((i%3)*(gameboard.width/3) +gameboard.width/6, (Math.floor(i/3))*(gameboard.height/3) + gameboard.width/6);
-          drawngamestate[i]=true;
+    });
+    for (var i=0;i<9;i++){
+      if (drawngamestate[i]== false){
+        if(parseInt(gamestate[i]) === 2){ //game creator is always X
+            drawx((i%3)*(gameboard.width/3) +gameboard.width/6, (Math.floor(i/3))*(gameboard.height/3) + gameboard.width/6);
+            drawngamestate[i]=true;
+          } else if (gamestate[i] != 0) {
+            drawo((i%3)*(gameboard.width/3) +gameboard.width/6, (Math.floor(i/3))*(gameboard.height/3) + gameboard.width/6);
+            drawngamestate[i]=true;
+          }
         }
       }
     }
+  }
+
+  function gameend(winner, loser, tie){
+    if (parseInt(playerid) === parseInt(gameid)){
+       $.ajax({
+        type: 'POST',
+        url: 'gameend.php',
+        data: { "winner": winner, "loser": loser, "tie": tie},
+        async: false
+      });
+     }
   }
 
   function startgame(){
