@@ -213,7 +213,7 @@ function resetgame(){
   justwent = 1;
   gameover = false;
   initboard();
-  document.getElementById("end").innerHTML = "";
+  document.getElementById("end").innerHTML = "Playing vs Computer";
 }
 
 
