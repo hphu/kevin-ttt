@@ -1,7 +1,6 @@
 
 var gameboard;
 var gamestate = new Array();
-var ctx;
 var justwent;
 var playerid;
 var gameid; //id of the game's creator
@@ -14,12 +13,12 @@ var gameover = false;
 
 var drawngamestate = new Array(); //array to keep track of what spaces have been drawn so we don't draw ontop of symbols.
 
-$(document).ready( function(){
-    gameboard = new Raphael(document.getElementById('board'), 500, 500);  
+$(document).ready(function(){
+  gameboard = new Raphael(document.getElementById('board'), 500, 500);  
   initboard();
   getsessionid(); //assign playerid = to the session id
 
-   $.ajax({
+    $.ajax({
     type: 'POST',
     url: 'initializegame.php',
     data: { "playerid": playerid},
@@ -58,8 +57,6 @@ function getsessionid(){ //get my player id
 
 //called on body load, intiializes empty tic tac toe board and sets update interval
 function initboard(){
-
-  //document.getElementById('board').addEventListener('click', mouseclick, false);
   $('#board').bind('click', mouseclick);
     
 
@@ -136,8 +133,6 @@ function mouseclick(e){
    c = document.getElementById('board');
    canvasx = x-c.offsetLeft;
    canvasy = y - c.offsetTop;
-   console.log(canvasy);
-   console.log(2*gameboard.height/3)
    if (gamebegun && !gameover){
      if (justwent == mystateid){
       alert("Not your turn");
@@ -228,9 +223,8 @@ function move(position){
 
 //called every second
 function update(){
-    //query database
+  //query database
   //update gamestate
-
     if (!gamebegun){
       startgame();
       document.getElementById("playerturn").innerHTML = "Waiting for opponent to join...";
@@ -294,7 +288,6 @@ function update(){
   }
 
   function startgame(){
-
     $.ajax({
     type: 'POST',
     url: 'startgame.php',
