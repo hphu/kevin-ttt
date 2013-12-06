@@ -1,12 +1,12 @@
 
 function friendMatch(){
-  window.location.href='friendlist.html';
+  window.location.href='friendchallenge.html';
 }
 function rankedMatch(){
   window.location.href='game.html';
 }
 function compMatch(){
-  window.location.href='compmatch.html';
+  window.location.href='AIgame.html';
 }
 function leaderboards(){
   window.location.href='leaderboards.html';

@@ -13,46 +13,18 @@ var gameover = false;
 
 var drawngamestate = new Array(); //array to keep track of what spaces have been drawn so we don't draw ontop of symbols.
 
-$(document).ready(function(){
-  gameboard = new Raphael(document.getElementById('board'), 500, 500);  
-  initboard();
-  getsessionid(); //assign playerid = to the session id
 
-    $.ajax({
-    type: 'POST',
-    url: 'initializegame.php',
-    data: { "playerid": playerid},
-    async: false,
-    success: function(fromphp) { //get result from php
-      gameid = fromphp;
-
-
-      if (parseInt(playerid) === parseInt(gameid)){
-        mystateid = 2;
-      } else {
-        mystateid = 1;
-      }
-
-    },
-    error: function(xhr, one, two) {
-        alert("ERROR");
-    }
-  });
-
-});
 
 function getsessionid(){ //get my player id
     $.ajax({
-	    type: 'POST',
-	    url: 'session.php',
+      type: 'POST',
+      url: 'session.php',
       async: false,
-	    success: function(data) {
-	    	playerid=data;
+      success: function(data) {
+        playerid=data;
 
-	    }
-	});
-
-
+      }
+  });
 }
 
 //called on body load, intiializes empty tic tac toe board and sets update interval
@@ -227,7 +199,6 @@ function update(){
   //update gamestate
     if (!gamebegun){
       startgame();
-      document.getElementById("playerturn").innerHTML = "Waiting for opponent to join...";
     } else if (!gameover){
       if (justwent == mystateid){
         document.getElementById("playerturn").innerHTML = opponentname + "'s turn";
@@ -262,6 +233,7 @@ function update(){
           }
         }
     });
+    console.log(gamestate);
     for (var i=0;i<9;i++){
       if (drawngamestate[i]== false){
         if(parseInt(gamestate[i]) === 2){ //game creator is always X
@@ -276,38 +248,3 @@ function update(){
     }
   }
 
-  function gameend(winner, loser, tie){
-    if (parseInt(playerid) === parseInt(gameid)){
-       $.ajax({
-        type: 'POST',
-        url: 'gameend.php',
-        data: { "winner": winner, "loser": loser, "tie": tie},
-        async: false
-      });
-     }
-  }
-
-  function startgame(){
-    $.ajax({
-    type: 'POST',
-    url: 'startgame.php',
-    data: {"gameid": gameid},
-    async:false,
-    success: function(data) {
-      var names = data.split("-separator!@#$-");
-      if(names[1]){
-        gamebegun= true;
-        if(parseInt(playerid) === parseInt(gameid)){
-          //console.log(names[0] + "ismyname");
-          myname = names[0];
-          opponentname = names[1];
-        } else {
-          //console.log(names[1] + "is my name");
-          myname = names[1];
-          opponentname = names[0];
-        }
-      }
-    }
-   });
-
-  }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="buttonstyle.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="raphael.js"></script>  
+<script type="text/javascript" src="friendmenu.js"></script>
+<script type="text/javascript" src="tttfriendmodel.js"></script>
+<script type="text/javascript" src="ttt.js"></script>
+</head>
+<body>
+	<p id="playerturn">Friend Challenge</p>
+    <div id="board"></div>
+	<FORM id="form" onsubmit="challengefriend(); return false;">
+	<label>Enter Friend's Username:</label>
+	<input type="text" id="name"/>
+	<input type="submit" value="Challenge!"/>
+	</FORM>
+	<button id="menu" onclick="menu()">Main Menu</button>
+</body>
+</html>
