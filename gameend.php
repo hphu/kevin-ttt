@@ -3,6 +3,7 @@
 $winner = $_POST['winner'];
 $loser = $_POST['loser'];
 $tie = $_POST['tie'];
+$game_id = $_POST['gameid'];
 
 $user="root";
 $password="";
@@ -22,6 +23,9 @@ if ($tie == 'true'){
 
 
 }
+$time = mysql_query("SELECT MAX(timestamp) FROM game WHERE player1id=($game_id)");
+$recent = mysql_fetch_array($time)[0];
+mysql_query("UPDATE game SET started=2 WHERE player1id=($game_id) AND timestamp =($recent)"); //state = finished game = 2
 mysql_query("UPDATE users SET rank = (wins/(wins+losses+ties)) WHERE username =('$winner')");
 mysql_query("UPDATE users SET rank = (wins/(wins+losses+ties)) WHERE username =('$loser')");
 

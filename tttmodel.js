@@ -30,7 +30,7 @@ $(document).ready(function(){
        $.ajax({
         type: 'POST',
         url: 'gameend.php',
-        data: { "winner": winner, "loser": loser, "tie": tie},
+        data: { "winner": winner, "loser": loser, "tie": tie, "gameid": gameid},
         async: false
       });
      }

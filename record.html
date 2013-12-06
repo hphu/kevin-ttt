@@ -2,16 +2,48 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="TTT.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript">
+
+var myid;
+
 function mainMenu(){
   window.location.href='mainmenu.html';
 }
+
+function load(){
+    $.ajax({
+        type: 'POST',
+        url: 'session.php',
+        async: false,
+        success: function(data) {
+            myid=data;
+         }
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: 'myprofile.php',
+        data: { "myid": myid},
+        async: false,
+        success: function(data) {
+        	data = data.split(" ");
+        	document.getElementById("name").innerHTML = "Welcome to your profile " + data[0];
+        	document.getElementById("record").innerHTML = "wins:"+data[1] + " ties:" + data[2] + " losses:" + data[3];
+        }
+    });
+
+}
+
+
+
 </script>
 </head>
-<body>
+<body onload="load();">
 
-<h1>Personal Record</h1>
-<p>Returns player data from that specific player's database entry.</p>
+<h1 id="name">Personal Record</h1>
+<p id="record">Returns player data from that specific player's database entry.</p>
 
 <button type="button" onclick="mainMenu()">Return To Menu</button>
 </select>

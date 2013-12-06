@@ -2,27 +2,41 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="TTT.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript">
+
 function mainMenu(){
   window.location.href='mainmenu.html';
 }
+
+function load(){
+       $.ajax({
+        url: 'getleaders.php',
+        async: false,
+        success: function(data){
+        	var parse = data.split("\n");
+        	var text = "";
+        	for (var i=0;i<parse.length-1;i++){
+        		var line=parse[i].split(" ");
+        		if (i==parse.length){
+    				text+= (i+1) + ". " + line[0] + " wins:" + line[1] + " ties:" + line[2] + " losses:" + line[3];
+        		} else {
+    				text+= (i+1) + ". " + line[0] + " wins:" + line[1] + " ties:" + line[2] + " losses:" + line[3] +"<br>";
+    			}
+    			}
+	    		document.getElementById("leaderboard").innerHTML = text;
+        	}
+      });
+}
+
 </script>
 </head>
-<body>
+<body onload="load();">
 
 <h1>Leaderboards</h1>
 <div id="leaderDiv">
 <p id="leaderboard">
-1. First Place Player<br>
-2. Second Place Player<br>
-3. Third Place Player<br>
-4. Fourth Place Player<br>
-5. Fifth Place Player<br>
-6. Sixth Place Player<br>
-7. Seventh Place Player<br>
-8. Eighth Place Player<br>
-9. Ninth Place Player<br>
-10. Tenth Place Player<br>
+There was an error!
 </p>
 </div>
 <button type="button" onclick="mainMenu()">Return To Menu</button>
