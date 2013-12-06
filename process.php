@@ -1,11 +1,16 @@
 <?php
 
   function insertuser($email,$uname, $pword){
-	if (mysql_query("INSERT INTO users (email, username, password)
-	VALUES ('$email', '$uname', '$pword')")){
-		echo "REGISTRATION SUCCESSFUL";
-	} else {
-		echo "error";
+  	if (mysql_num_rows(mysql_query("SELECT username FROM users WHERE username='$uname'"))!=0){
+  		echo "Username ".$uname. " is taken";
+  	} else {
+		if (mysql_query("INSERT INTO users (email, username, password)
+		VALUES ('$email', '$uname', '$pword')")){
+			echo "REGISTRATION SUCCESSFUL";
+			header("Location: registration.html");
+		} else {
+			echo "error";
+		}
 	}
 }
 
@@ -17,7 +22,7 @@ function loginuser($uname, $pword){
 		$id = mysql_fetch_array($sessionid);
 		$_SESSION['id']=(int)$id[0];
 		header("Location: mainmenu.html");
-		//echo $_SESSION['id'];
+		echo $_SESSION['id'];
 	} else {
 		echo "Incorrect Username/Password!";
 	}

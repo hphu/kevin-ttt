@@ -31,6 +31,21 @@ function load(){
         	data = data.split(" ");
         	document.getElementById("name").innerHTML = "Welcome to your profile " + data[0];
         	document.getElementById("record").innerHTML = "wins:"+data[1] + " ties:" + data[2] + " losses:" + data[3];
+            var achieve = "Achievements: <br>";
+            for (var i=1;i<=10;i++){
+                if (data[1] >5*i){
+                    achieve+= "\u2297 Win "+5*i +" games or more <br>";
+                }
+            }
+            for (var i=1;i<10;i++){
+                if (data[1]+data[2]+data[3] > 10*i){
+                    achieve+= "\u2297 Played "+ 10*i+" games or more <br>";
+                }
+            }
+            if (data[1] > data[3]){
+                achieve+= "\u2297 More wins than losses <br>";
+            }
+            document.getElementById("achievements").innerHTML = achieve;
         }
     });
 
@@ -44,7 +59,8 @@ function load(){
 
 <h1 id="name">Personal Record</h1>
 <p id="record">Returns player data from that specific player's database entry.</p>
-
+<div></div>
+<div id="achievements"></div>
 <button type="button" onclick="mainMenu()">Return To Menu</button>
 </select>
 </body>
